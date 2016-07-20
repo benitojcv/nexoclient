@@ -216,7 +216,7 @@ function init_mediatypes() {
 //         return _ajax_request(url, data, callback, 'PUT');
 // }});
 
-var ORION_URL = 'http://192.168.30.52:1026/v2';
+var ORION_URL = '/orion';
 var QUERY_CONTEXT = ORION_URL + '/' + 'entities';
 
 function queryContext(entityId) {
@@ -234,6 +234,8 @@ function queryContext(entityId) {
       }
 
       var response = xhr.response;
+      console.log(xhr);
+      console.log(response);
       resolve(response);
     }
 
