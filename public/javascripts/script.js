@@ -202,20 +202,6 @@ function init_mediatypes() {
 
 // ***************************************************************
 
-// function _ajax_request(url, data, callback, method) {
-//     return jQuery.ajax({
-//         url: url,
-//         type: method,
-//         data: data,
-//         success: callback
-//     });
-// }
-//
-// jQuery.extend({
-//     put: function(url, data, callback) {
-//         return _ajax_request(url, data, callback, 'PUT');
-// }});
-
 var ORION_URL = '/orion';
 var QUERY_CONTEXT = ORION_URL + '/' + 'entities';
 
@@ -245,7 +231,7 @@ function queryContext(entityId) {
   });
 }
 
-function updateContext(entityId, attr, data) {
+function updateContext(entityId, attr) {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.open('PUT', QUERY_CONTEXT + '/' + entityId + '/attrs/' + attr, true);
@@ -254,7 +240,7 @@ function updateContext(entityId, attr, data) {
     xhr.setRequestHeader('Accept', 'application/json');
 
     xhr.onload = function() {
-      if(xhr.status !== 200) {
+      if(xhr.status !== 200 && xhr.status !== 204) {
         reject(xhr.status);
         return;
       }
@@ -272,34 +258,12 @@ function updateContext(entityId, attr, data) {
 
 
 function process(event) {
-  switch (event.type) {
-    case "play":
-      // $.put('http://192.168.30.52:1026/v2/entities/User1/attrs/player_play', { 'value': '111', 'type': 'Number'  }, function(result) {
-      //   alert(result);
-      // });
-        queryContext("User1").then(function(data) {
-          if(data) {
-            console.log('Data has been found: ', JSON.stringify(data));
-          }
-          else {
-            console.log('Entity not found!');
-          }
-        }).catch(function(err) {
-          console.error('Error while querying: ', err);
-        });
-      break;
-    case "pause":
-      updateContext("User1", "player_pause", {'value':111,'type':'Number'}).then(function(data) {
-        if(data) {
-          console.log('Data has been found: ', JSON.stringify(data));
-        }
-        else {
-          console.log('Entity not found!');
-        }
-      }).catch(function(err) {
-        console.error('Error while querying: ', err);
-      });
-      break;
+  if (event.type == "play" || event.type == "pause") {
+    updateContext("User1", "event_" + event.type).then(function(data) {
+      console.log("event_" + event.type + " processed!");
+    }).catch(function(err) {
+      console.error('Error while querying: ', err);
+    });
   }
 }
 
