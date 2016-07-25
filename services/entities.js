@@ -20,6 +20,7 @@ module.exports = {
   },
   createUser: function(user) {
     return new Promise(function(resolve, reject) {
+      //FIXME: No usar geolocalizacion fija para el usuario
       request({
         url: ORION_URL + '/entities',
         method: 'POST',
@@ -31,8 +32,12 @@ module.exports = {
                   "type": "String"
                 },
                 "location": {
-                  "value": "0,0",
+                  "value": "28.4774247,-16.2463847",
                   "type": "geo:point"
+                },
+                "temperature": {
+                  "value": "0",
+                  "type": "Float"
                 },
                 "event_pause": {
                   "value": 0,

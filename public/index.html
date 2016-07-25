@@ -9,6 +9,30 @@
 <body>
   <h1>HTML5 Video Events and API</h1>
 
+  <div id="recomendation"></div>
+  <script src="/socket.io/socket.io-1.4.5.js"></script>
+  <script>
+    var socket = io('http://localhost:3002');
+    socket.connect();
+
+    socket.emit('storeClientInfo', "User1"); //FIXME
+
+
+    socket.on('connect',function() {
+    	console.log('Client has connected to the server!');
+    });
+
+    var el = document.getElementById('recomendation');
+    socket.on('messageRecomendation', function(data) {
+      console.log("hola");
+        el.innerHTML = 'Server time: ' + data;
+    });
+
+    socket.on('disconnect',function() {
+	    console.log('The client has disconnected!');
+    });
+  </script>
+
   <p>This page demonstrates the new <a
   href='http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element'>HTML5 video
   element</a>, its <a
