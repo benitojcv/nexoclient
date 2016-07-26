@@ -9,7 +9,7 @@
 <body>
   <h1>HTML5 Video Events and API</h1>
 
-  <div id="recomendation"></div>
+  <div id="recomendation" class=""></div>
   <script src="/socket.io/socket.io-1.4.5.js"></script>
   <script>
     var socket = io('http://localhost:3002');
@@ -24,8 +24,13 @@
 
     var el = document.getElementById('recomendation');
     socket.on('messageRecomendation', function(data) {
-      console.log("hola");
-        el.innerHTML = 'Server time: ' + data;
+      console.log("Recomendacion recibida: " + data);
+      el.innerHTML = data;
+      el.classList.add("recomend");
+      setTimeout(function() {
+        el.innerHTML = "";
+        el.classList.remove("recomend");
+      }, 5000);
     });
 
     socket.on('disconnect',function() {
@@ -46,7 +51,7 @@
     <video id='video'
       controls preload='none'
       mediagroup='myVideoGroup'
-      poster="https://media.w3.org/2010/05/sintel/poster.png">
+      poster="/videos/yoga1.png">
 <!--
       <source id='mp4'
         src="../sintel/trailer.mp4"
@@ -56,14 +61,14 @@
         type='video/webm'>
 -->
       <source id='mp4'
-        src="https://media.w3.org/2010/05/sintel/trailer.mp4"
+        src="/videos/yoga1.mp4"
         type='video/mp4'>
       <source id='webm'
-        src="https://media.w3.org/2010/05/sintel/trailer.webm"
+        src="/videos/yoga1.webm"
         type='video/webm'>
-      <source id='ogv'
+      <!-- <source id='ogv'
         src="https://media.w3.org/2010/05/sintel/trailer.ogv"
-        type='video/ogg'>
+        type='video/ogg'> -->
 
       <p>Your user agent does not support the HTML5 Video element.</p>
     </video>
