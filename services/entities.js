@@ -1,7 +1,8 @@
 var request = require('request');
 var moment = require('moment');
+var config = require('../config');
 
-var ORION_URL = 'http://localhost:1026/v2';
+var ORION_URL = config.orion_url;
 
 module.exports = {
   updateUserAttribute: function(user, attr) {
