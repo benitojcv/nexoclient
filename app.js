@@ -48,9 +48,8 @@ app.get('/logout', function(req, res){
 app.use('/auth', auth);
 
 // Todo lo que esté a partir de este middleware requiere de autenticacion
-app.use(authChecker);
-
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(authChecker);
 app.use('/', routes);
 app.use('/orion', orion);
 
